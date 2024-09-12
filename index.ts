@@ -1,6 +1,7 @@
 require('dotenv').config()
 import Client from "@triton-one/yellowstone-grpc"
 
+const timer = process.env.TIMER ? Number(process.env.TIMER) : 10
 const url = process.env.YELLOWSTONE_URL
 
 if (!url) {
@@ -18,4 +19,4 @@ console.log("starting up");
 setInterval(() => {
 	console.log(`\tsending ping to yellowstone`);
 	yellowstoneClient.ping(unixTimestamp);
-}, 1000 * 10);
+}, timer * 10);
