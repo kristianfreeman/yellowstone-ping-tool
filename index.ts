@@ -12,11 +12,14 @@ if (!url) {
 console.log("connecting to: ", url);
 const yellowstoneClient = new Client(url, undefined, {});
 
-const unixTimestamp = Math.floor(Date.now());
-
 console.log("starting up");
 
-setInterval(() => {
-	console.log(`\tsending ping to yellowstone`);
-	yellowstoneClient.ping(unixTimestamp);
-}, timer * 10);
+setInterval(async () => {
+	try {
+		const height = await yellowstoneClient.getBlockHeight();
+		console.log(`block height is ${height}`)
+	} catch (err) {
+		console.log(`couldn't retrieve block height`)
+		console.debug(`something went wrong: ${err}`)
+	}
+}, timer * 1000);
